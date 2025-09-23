@@ -1,0 +1,71 @@
+/* components/ProgressBar.css */
+
+/*ДАННЫЙ CSS КОД ВЗЯТ НА ПРОСТОРАХ ИНТЕРНЕТА*/
+
+.progress-bar {
+  position: fixed; /* Фиксируем вверху страницы */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px; /* Тонкая полоска */
+  background-color: #e0e0e0; /* Цвет фона полоски */
+  overflow: hidden; /* Скрываем выходящие за границы элементы */
+  z-index: 9999; /* Чтобы был поверх всех элементов */
+}
+
+.progress-bar-value {
+  width: 100%;
+  height: 100%;
+  background-color: #007bff;
+  animation: indeterminateAnimation 1.5s infinite linear;
+  transform-origin: 0% 50%;
+}
+
+/* Можно использовать разные цвета в зависимости от темы */
+.progress-bar.theme-secondary .progress-bar-value {
+  background-color: #6c757d;
+}
+
+.progress-bar.theme-success .progress-bar-value {
+  background-color: #28a745;
+}
+
+/* Ключевые кадры анимации */
+@keyframes indeterminateAnimation {
+  0% {
+    transform: translateX(0) scaleX(0);
+  }
+  50% {
+    transform: translateX(0) scaleX(0.5);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.25);
+  }
+}
+
+/* Альтернативный, более плавный вариант анимации */
+/* @keyframes indeterminateAnimationSmooth {
+  0% {
+    transform: translateX(-100%) scaleX(0.2);
+  }
+  50% {
+    transform: translateX(0%) scaleX(0.5);
+  }
+  100% {
+    transform: translateX(100%) scaleX(0.2);
+  }
+} */
+
+Для быстрой загрузки можно добавить вторую,
+отстающую полоску */ .progress-bar-value::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background-color: inherit;
+  width: 100%;
+  animation: indeterminateAnimation 2s infinite linear;
+  animation-delay: 1s; /* Небольшая задержка для второй полоски */
+  opacity: 0.6;
+}

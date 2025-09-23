@@ -1,0 +1,112 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+    id        String @id @default(uuid())
+    email String @unique 
+    password String
+    role Role @default(USER)
+    isActivated Boolean @default(false)
+    activationLink String
+
+    cart Cart?
+    
+    refreshToken Token?
+}
+model Token {
+    id        String @id @default(uuid())
+    refreshToken String
+    user User @relation(fields: [userid], references: [id])
+    userid String @unique
+
+}
+model Product {
+    id        Int @id @default(autoincrement())
+    name      String
+    description String
+    type        String[]
+    portion     String?
+    image       String
+    price       String
+    categoryId  Int
+    category Category @relation(fields: [categoryId], references: [id])
+    
+    ingredients Ingredient[] @relation("ProductToIngredient")
+
+    createdAt    DateTime @default(now())
+    updateAt    DateTime @updatedAt
+
+    
+}
+model Category {
+    id        Int @id @default(autoincrement())
+    name      String
+    products  Product[]
+
+    
+    createdAt    DateTime @default(now())
+    updateAt    DateTime @updatedAt
+}
+model Ingredient {
+    id        Int @id @default(autoincrement())
+    name      String
+    image     String
+    price     String
+
+    products Product[]  @relation("ProductToIngredient")
+}
+model Cart{
+    id        String @id @default(uuid())
+    user User?   @relation(fields: [userId], references: [id])
+    userId  String? @unique
+
+    sessionId String? @unique
+    items CartItem[]
+
+    totalPrice Int?
+
+    
+    createdAt    DateTime @default(now())
+    updateAt    DateTime @updatedAt
+
+    @@unique([userId,sessionId])
+}
+model CartItem{
+    id        String @id @default(uuid())
+
+    cart Cart  @relation(fields: [cartId],references: [id])
+    cartId String
+
+    productId Int
+    name String?
+    description String?
+    portion String?
+    price Int?
+    image String?
+
+    quantity Int
+    
+    customization Json?
+
+     
+    createdAt    DateTime @default(now())
+  
+    
+
+}
+enum Role {
+  USER
+  ADMIN
+}
