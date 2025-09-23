@@ -13,10 +13,10 @@ declare module "axios" {
   }
 }
 
-
-const API_URL = import.meta.env.MODE === 'production'
-  ? "https://your-app.vercel.app/api"
-  : "http://localhost:5000/api";
+const API_URL =
+  import.meta.env.MODE === "production"
+    ? "https://fullstack-react-pizza.onrender.com"
+    : "http://localhost:5000/api";
 
 export const api: AxiosInstance = axios.create({
   withCredentials: true,

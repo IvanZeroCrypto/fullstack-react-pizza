@@ -231,7 +231,11 @@ const UpdateProduct = () => {
                 src={
                   previewUrl !== null
                     ? previewUrl
-                    : `http://localhost:5000${image}`
+                    : `${
+                        process.env.API_URL
+                          ? process.env.API_URL
+                          : "http://localhost:5000"
+                      }${image}`
                 }
               />
             </div>

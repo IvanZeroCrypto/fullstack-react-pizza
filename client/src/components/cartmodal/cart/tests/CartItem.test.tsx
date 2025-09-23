@@ -62,7 +62,9 @@ describe("CartItem", () => {
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute(
       "src",
-      `http://localhost:5000${mockItem.image}`
+      ` ${process.env.API_URL ? process.env.API_URL : "http://localhost:5000"}${
+        mockItem.image
+      }`
     );
     expect(image).toHaveClass("w-[50px] h-[50px]");
   });

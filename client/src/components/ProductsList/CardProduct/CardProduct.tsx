@@ -64,7 +64,11 @@ const CardProduct: FC<ICardProductProps> = ({ item }) => {
             <img
               onClick={() => setActiveModal(true)}
               className=" transition ease-in duration-200 hover:translate-y-[6px] max-w-[220px] h-[220px] cursor-pointer"
-              src={`http://localhost:5000${item.image}`}
+              src={` ${
+                process.env.API_URL
+                  ? process.env.API_URL
+                  : "http://localhost:5000"
+              }${item.image}`}
             />
           </div>
           <div className="text-[20px] font-normal my-2">{item.name}</div>
