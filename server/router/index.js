@@ -54,4 +54,3 @@ router.post(
 );
 router.delete("/cart/:id", cartController.deleteCartItem);
 router.delete("/carted/:id", cartController.deleteCart);
-// postgresql://my_backend_service_user:S3t9uqSKP4ZUgnhEIxAWFKGuPCCE8iom@dpg-d39adhndiees7387pftg-a.oregon-postgres.render.com/my_backend_service
