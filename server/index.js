@@ -13,11 +13,14 @@ app.use(cookieParser());
 app.use(
   cors({
     credentials: true,
-    origin: ["http://localhost:5173","https://react-pizza-blond-nine.vercel.app"],
+    origin: [
+      "http://localhost:5173",
+      "https://react-pizza-blond-nine.vercel.app",
+    ],
   })
 );
 
-app.use("/api", router);
+app.use(router);
 
 const start = async () => {
   try {
