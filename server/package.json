@@ -6,7 +6,12 @@
   "license": "MIT",
   "scripts": {
     "start": "node index.js",
-    "dev": "nodemon index.js"
+    "dev": "nodemon index.js",
+    "prisma:generate": "prisma generate",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "build": "npm install && npx prisma generate",
+    "render-build": "npm run build && npx prisma migrate deploy",
+    "prisma:studio": "npx prisma studio"
   },
   "dependencies": {
     "@prisma/client": "^6.6.0",
