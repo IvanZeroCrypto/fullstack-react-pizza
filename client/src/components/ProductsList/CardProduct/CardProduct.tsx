@@ -63,7 +63,7 @@ const CardProduct: FC<ICardProductProps> = ({ item }) => {
 
             <img
               onClick={() => setActiveModal(true)}
-              className=" transition ease-in duration-200 hover:translate-y-[6px] max-w-[220px] h-[220px] cursor-pointer"
+              className=" transition ease-in duration-200 hover:translate-y-[6px] max-w-[220px] h-[190px] cursor-pointer"
               src={`https://fullstack-react-pizza.onrender.com${item.image}`}
             />
           </div>
