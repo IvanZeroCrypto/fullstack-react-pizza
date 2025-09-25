@@ -18,7 +18,7 @@ const ProductImage: FC<IProductImageProps> = ({ image, sizePizza }) => {
           " w-[330px] h-[330px] md:w-[330px] md:h-[330px]  lg:w-[480px] lg:h-[480px]":
             sizePizza === 35,
         })}
-        src={`http://localhost:5000${image}`}
+        src={`https://fullstack-react-pizza.onrender.com${image}`}
       />
     </div>
   );

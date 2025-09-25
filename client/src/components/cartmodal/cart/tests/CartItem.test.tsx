@@ -62,9 +62,7 @@ describe("CartItem", () => {
     expect(image).toBeInTheDocument();
     expect(image).toHaveAttribute(
       "src",
-      ` ${process.env.API_URL ? process.env.API_URL : "http://localhost:5000"}${
-        mockItem.image
-      }`
+      `https://fullstack-react-pizza.onrender.com${mockItem.image}`
     );
     expect(image).toHaveClass("w-[50px] h-[50px]");
   });

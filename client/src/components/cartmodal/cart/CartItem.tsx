@@ -34,9 +34,7 @@ const CartItem = ({ item }: ICartItemProps) => {
     >
       <img
         className="w-[50px] h-[50px]"
-        src={`${
-          process.env.API_URL ? process.env.API_URL : "http://localhost:5000"
-        }${item.image}`}
+        src={`https://fullstack-react-pizza.onrender.com${item.image}`}
       />
       <div className="flex flex-col w-full  ml-5">
         <div className="flex items-center justify-between">

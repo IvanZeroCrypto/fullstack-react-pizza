@@ -1,12 +1,10 @@
 import { RiDeleteBin6Line } from "react-icons/ri";
 import CartItem from "../cartmodal/cart/CartItem";
 import WhiteBlock from "../shared/white-block/WhiteBlock";
-import { useTransition, animated } from "@react-spring/web";
 import useCartStores from "../../store/cartStores";
 import CartService from "../../http/services/CartService";
 import toast from "react-hot-toast";
 import { Navigate } from "react-router-dom";
-import ContentLoader from "react-content-loader";
 const BlockCart = () => {
   const { basketGoods, fetchBasket } = useCartStores();
 
@@ -21,12 +19,6 @@ const BlockCart = () => {
       alert(error);
     }
   };
-
-  const transitions = useTransition(basketGoods, {
-    from: { opacity: 0, transform: "translate3d(0,40px,0)" },
-    enter: { opacity: 1, transform: "translate3d(0,0px,0)" },
-    leave: { opacity: 0, transform: "translate3d(0,40px,0)" },
-  });
 
   if (basketGoods.length === 0) {
     return <Navigate to="/" />;

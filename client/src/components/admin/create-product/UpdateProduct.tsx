@@ -231,11 +231,7 @@ const UpdateProduct = () => {
                 src={
                   previewUrl !== null
                     ? previewUrl
-                    : `${
-                        process.env.API_URL
-                          ? process.env.API_URL
-                          : "http://localhost:5000"
-                      }${image}`
+                    : `https://fullstack-react-pizza.onrender.com${image}`
                 }
               />
             </div>
