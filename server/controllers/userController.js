@@ -133,7 +133,7 @@ class UserController {
         },
       });
 
-      return res.redirect(process.env.CLIENT_URL);
+      // return res.redirect(process.env.CLIENT_URL);
     } catch (error) {
       res.status(500).json({ message: "Server error " });
     }
