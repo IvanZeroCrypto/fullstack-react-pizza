@@ -18,25 +18,25 @@ export default async function (req, res, next) {
         },
       });
       res.cookie("sessionId", sessionId, {
-        maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
-    } else {
-      const cart = await prisma.cart.findFirst({
-        where: { sessionId },
-      });
-
-      if (!cart) {
-        await prisma.cart.create({
-          data: {
-            sessionId,
-            items: {
-              create: [],
-            },
-          },
-        });
-      }
     }
+    // else {
+    //   const cart = await prisma.cart.findFirst({
+    //     where: { sessionId },
+    //   });
+
+    //   if (!cart) {
+    //     await prisma.cart.create({
+    //       data: {
+    //         sessionId,
+    //         items: {
+    //           create: [],
+    //         },
+    //       },
+    //     });
+    //   }
+    // }
 
     req.sessionId = sessionId;
     next();

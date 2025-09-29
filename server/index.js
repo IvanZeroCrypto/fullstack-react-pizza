@@ -33,18 +33,17 @@ function setupDatabase() {
   }
 }
 
-setupDatabase();
-
-const start = async () => {
+const start = () => {
   setupDatabase();
-  try {
-    app.listen(PORT, "0.0.0.0", () => {
-      console.log(`Server started port ${PORT}`);
-    });
-  } catch (error) {
-    console.log(error);
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`✅ Server successfully started on port ${PORT}`);
+  });
+
+  app.on("error", (error) => {
+    console.error("❌ Server error:", error);
     process.exit(1);
-  }
+  });
 };
 
 start();
