@@ -20,22 +20,7 @@ app.use(
 
 app.use(router);
 
-function setupDatabase() {
-  if (process.env.NODE_ENV === "production") {
-    try {
-      console.log("🚀 Applying database migrations...");
-      execSync("npx prisma migrate deploy", { stdio: "inherit" });
-      console.log("✅ Database migrations completed");
-    } catch (error) {
-      console.error("❌ Database migration failed:", error);
-      process.exit(1);
-    }
-  }
-}
-
 const start = () => {
-  setupDatabase();
-
   app.listen(PORT, "0.0.0.0", () => {
     console.log(`✅ Server successfully started on port ${PORT}`);
   });
