@@ -2,6 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { execSync } from "child_process";
 import { router } from "./router/index.js";
 dotenv.config();
 const PORT = process.env.PORT || 7000;
@@ -21,7 +22,6 @@ app.use(router);
 
 function setupDatabase() {
   if (process.env.NODE_ENV === "production") {
-    const { execSync } = require("child_process");
     try {
       console.log("🚀 Applying database migrations...");
       execSync("npx prisma migrate deploy", { stdio: "inherit" });
