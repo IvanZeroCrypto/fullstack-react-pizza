@@ -15,6 +15,8 @@ app.use(
   cors({
     credentials: true,
     origin: ["http://localhost:5173", "https://react-pizza-coral.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
 

@@ -41,7 +41,7 @@ class TokenService {
       );
       return validRefreshToken;
     } catch (error) {
-      console.log(error, "validationRefreshToken");
+      console.error(error, "validationRefreshToken");
     }
   }
   validationAccessToken(accessToken) {
@@ -52,7 +52,7 @@ class TokenService {
       );
       return validAccessToken;
     } catch (error) {
-      console.log(error, "validationAccessToken");
+      console.error(error, "validationAccessToken");
     }
   }
   async findToken(refreshToken) {
