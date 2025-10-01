@@ -13,10 +13,9 @@ declare module "axios" {
   }
 }
 
-const API_URL = "http://localhost:5000";
-// const API_URL = import.meta.env.PROD
-//   ? "https://fullstack-react-pizza.onrender.com"
-//   : "http://localhost:5000";
+const API_URL = import.meta.env.PROD
+  ? "https://fullstack-react-pizza.onrender.com"
+  : "http://localhost:7000";
 
 export const api: AxiosInstance = axios.create({
   withCredentials: true,
