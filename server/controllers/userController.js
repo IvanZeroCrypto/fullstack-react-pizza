@@ -6,16 +6,13 @@ import { TokenDto } from "../dtos/tokenDto.js";
 import mailService from "../service/mail-service.js";
 import tokenService from "../service/tokenService.js";
 class UserController {
-  async register(req, res, next) {
+  async register(req, res) {
     try {
       const { email, password } = req.body;
-      let sessionId = req.cookies.sessionId;
 
       if (!email || !password) {
         return res.status(400).json({ message: "Заполните все поля" });
       }
-
-      const cart = await prisma.cart.findFirst({ where: { sessionId } });
 
       const candidate = await prisma.user.findFirst({
         where: { email },
@@ -35,35 +32,18 @@ class UserController {
           activationLink,
         },
       });
-      if (sessionId) {
-        await prisma.cart.update({
-          where: {
-            sessionId,
-          },
-          data: {
-            userId: user.id,
-          },
-        });
-      } else {
-        sessionId = uuid.v4();
-
-        await prisma.cart.create({
-          data: {
-            userId: user.id,
-            sessionId,
-          },
-        });
-      }
 
       const userData = new UserDto(user);
       const tokens = tokenService.generateToken({ ...userData });
       const { accessToken } = new TokenDto(tokens);
       await tokenService.saveToken(userData.id, tokens.refreshToken);
-      res.cookie("refreshToken", tokens.refreshToken, {
-        maxAge: 60 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
+
+      await prisma.cart.create({
+        data: {
+          userId: user.id,
+        },
       });
-      res.cookie("sessionId", sessionId, {
+      res.cookie("refreshToken", tokens.refreshToken, {
         maxAge: 60 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
@@ -75,7 +55,7 @@ class UserController {
           "На вашу почту отправлена ссылка по которой вы можете активировать аккаунт",
       });
     } catch (error) {
-      res.status(500).json({ message: "Server error " });
+      res.status(500).json({ message: "Server error register " });
     }
   }
 

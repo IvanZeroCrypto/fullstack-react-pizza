@@ -3,10 +3,10 @@ import useAuthStore from "./store/authStore";
 import { useEffect } from "react";
 import Layout from "./components/layout/Layout";
 import AdminLayout from "./components/admin/admin-layout/AdminLayout";
-
 import React from "react";
 import LazyLoad from "./components/shared/lazy-load/LazyLoad";
 import Home from "./components/pages/home/Home";
+import ProtectedRouteAuth from "./components/shared/protected/ProtectedRouteAuth";
 
 const Register = React.lazy(
   () => import("./components/pages/register/Register")
@@ -39,12 +39,21 @@ function App() {
       path: "/",
       element: <Layout />,
       children: [
-        { path: "", element: <Home /> },
+        {
+          path: "",
+          element: (
+            <ProtectedRouteAuth>
+              <Home />
+            </ProtectedRouteAuth>
+          ),
+        },
         {
           path: "cart",
           element: (
             <LazyLoad>
-              <CartPage />
+              <ProtectedRouteAuth>
+                <CartPage />
+              </ProtectedRouteAuth>
             </LazyLoad>
           ),
         },

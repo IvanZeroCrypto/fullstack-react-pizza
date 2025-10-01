@@ -6,7 +6,6 @@ import ingredientController from "../controllers/ingredientController.js";
 import cartController from "../controllers/cartController.js";
 import auth from "../middleware/auth.js";
 import authRole from "../middleware/roleMIddleware.js";
-import cartInit from "../middleware/cartInit.js";
 import upload from "../middleware/fileUploads.js";
 export const router = new Router();
 
@@ -45,12 +44,8 @@ router.delete("/product/:id", authRole, productController.deleteProduct);
 router.post("/ingredients", ingredientController.createIngredient);
 router.get("/ingredients", ingredientController.getAllIngredients);
 
-router.get("/cart", cartInit, cartController.getCart);
-router.post("/cart", cartInit, cartController.addProductCart);
-router.post(
-  "/cart/item-quantity",
-  cartInit,
-  cartController.changeProductQuantity
-);
-router.delete("/cart/:id", cartController.deleteCartItem);
-router.delete("/carted/:id", cartController.deleteCart);
+router.get("/cart", auth, cartController.getCart);
+router.post("/cart", auth, cartController.addProductCart);
+router.post("/cart/item-quantity", auth, cartController.changeProductQuantity);
+// router.delete("/cart/:id", cartController.deleteCartItem);
+router.delete("/cart", auth, cartController.deleteCart);

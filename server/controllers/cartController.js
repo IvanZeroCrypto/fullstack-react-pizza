@@ -3,10 +3,10 @@ import { prisma } from "../prisma/prisma-client.js";
 class CartController {
   async getCart(req, res) {
     try {
-      const sessionId = req.sessionId;
+      const userId = req.user.id;
 
       const existingCart = await prisma.cart.findFirst({
-        where: { sessionId },
+        where: { userId },
         include: {
           items: true,
         },
@@ -15,7 +15,7 @@ class CartController {
       if (!existingCart) {
         return res
           .json(400)
-          .json({ message: "Неверный sessionId или корзины не существует" });
+          .json({ message: "Неверный user.id или корзины не существует" });
       }
 
       const totalPriceBasket = existingCart.items
@@ -42,7 +42,6 @@ class CartController {
   }
   async addProductCart(req, res) {
     try {
-      const sessionId = req.sessionId;
       const { productId, ingredients, type, pricePizza, size, weight } =
         req.body;
 
@@ -54,7 +53,7 @@ class CartController {
 
       const cart = await prisma.cart.findFirst({
         where: {
-          sessionId,
+          userId: req.user.id,
         },
         include: {
           items: true,
@@ -206,10 +205,24 @@ class CartController {
 
   async deleteCart(req, res) {
     try {
-      await prisma.cart.delete({
+      const cart = await prisma.cart.findUnique({
         where: {
-          id: req.params.id,
+          userId: req.user.id,
         },
+        include: {
+          items: true,
+        },
+      });
+      if (!cart) {
+        return res.json(400).json({ message: "Корзины не существует" });
+      }
+
+      cart.items.forEach(async (item) => {
+        await prisma.cartItem.delete({
+          where: {
+            id: item.id,
+          },
+        });
       });
 
       res.json("ok");

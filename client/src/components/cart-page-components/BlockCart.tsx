@@ -31,6 +31,7 @@ const BlockCart = () => {
     >
       <button
         onClick={resetCart}
+        type="button"
         className="absolute right-10 top-6 flex items-center gap-1 text-gray-400"
       >
         <RiDeleteBin6Line />

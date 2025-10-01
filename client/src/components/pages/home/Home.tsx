@@ -8,7 +8,6 @@ import useProductsStore from "../../../store/productsStore";
 import Container from "../../shared/Container";
 import CartModal from "../../cartmodal/CartModal";
 import Categories from "../../categories/Categories";
-//
 
 function Home() {
   const [activeCart, setActiveCart] = useState<boolean>(false);
