@@ -31,17 +31,59 @@ class TokenService {
       });
     } catch (error) {
       console.log(error);
+      return null;
     }
   }
+  // validationRefreshToken(refreshToken) {
+  //   try {
+  //     const validRefreshToken = jwt.verify(
+  //       refreshToken,
+  //       process.env.JWT_REFRESH_SECRET
+  //     );
+  //     return validRefreshToken;
+  //   } catch (error) {
+  //     console.error(error, "validationRefreshToken");
+  //     return null;
+  //   }
+  // }
   validationRefreshToken(refreshToken) {
     try {
+      console.log("=== JWT VALIDATION DEBUG ===");
+      console.log("Token exists:", !!refreshToken);
+      console.log("Token length:", refreshToken?.length);
+      console.log(
+        "JWT_REFRESH_SECRET exists:",
+        !!process.env.JWT_REFRESH_SECRET
+      );
+      console.log(
+        "JWT_REFRESH_SECRET length:",
+        process.env.JWT_REFRESH_SECRET?.length
+      );
+      console.log("Server time:", new Date().toISOString());
+
       const validRefreshToken = jwt.verify(
         refreshToken,
         process.env.JWT_REFRESH_SECRET
       );
+
+      console.log("Token validation SUCCESS");
+      console.log("Token payload:", validRefreshToken);
       return validRefreshToken;
     } catch (error) {
-      console.error(error, "validationRefreshToken");
+      console.error("=== JWT VALIDATION ERROR ===");
+      console.error("Error name:", error.name);
+      console.error("Error message:", error.message);
+
+      if (error.name === "TokenExpiredError") {
+        console.error("Token expired at:", error.expiredAt);
+        console.error("Current time:", new Date());
+      }
+
+      if (error.name === "JsonWebTokenError") {
+        console.error("JWT error details:", error);
+      }
+
+      return null;
     }
   }
   validationAccessToken(accessToken) {
