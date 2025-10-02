@@ -46,6 +46,8 @@ class UserController {
       res.cookie("refreshToken", tokens.refreshToken, {
         maxAge: 60 * 24 * 60 * 60 * 1000,
         httpOnly: true,
+        secure: true,
+        sameSite: "none",
       });
 
       res.json({
@@ -84,10 +86,8 @@ class UserController {
       await tokenService.saveToken(userData.id, tokens.refreshToken);
       res.cookie("refreshToken", tokens.refreshToken, {
         maxAge: 60 * 24 * 60 * 60 * 1000,
-        httpOnly: true,
-      });
-      res.cookie("sessionId", user.cart.sessionId, {
-        maxAge: 60 * 24 * 60 * 60 * 1000,
+        secure: true,
+        sameSite: "none",
         httpOnly: true,
       });
 
@@ -122,6 +122,11 @@ class UserController {
     try {
       const { refreshToken } = req.cookies;
 
+      console.log("=== COOKIES DEBUG ===");
+      console.log("All cookies:", req.cookies);
+      console.log("Refresh token from cookies:", refreshToken);
+      console.log("Refresh token exists:", !!refreshToken);
+
       const validRefreshToken = await tokenService.validationRefreshToken(
         refreshToken
       );
@@ -148,6 +153,8 @@ class UserController {
 
       res.cookie("refreshToken", tokens.refreshToken, {
         maxAge: 60 * 24 * 60 * 60 * 1000,
+        secure: true,
+        sameSite: "none",
         httpOnly: true,
       });
 
